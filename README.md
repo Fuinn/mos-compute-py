@@ -10,17 +10,19 @@ MOS compute workers.
 
 ### Python dependencies
 
-```sudo pip install -r requirements.txt``
+```sudo pip install -r requirements.txt```
 
-### Dependencies Julia
+### Julia Dependencies
 
 ```
-    import Pkg
-    Pkg.activate(".")
-    Pkg.instantiate()
+import Pkg
+Pkg.activate(".")
+Pkg.instantiate()
 ```
 
 ### Environment variables
+
+The following environment variables can be specified. They can be provided via a .env file.
 
 * MOS_BACKEND_HOST
 * MOS_BACKEND_PORT
