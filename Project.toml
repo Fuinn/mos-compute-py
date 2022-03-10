@@ -1,0 +1,17 @@
+name = "MOSCompute"
+uuid = "44e464c8-1265-11ea-3e7d-e3ac06accecb"
+authors = ["Tomas Tinoco De Rubira <ttinoco5687@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+AMQPClient = "79c8b4cd-a41a-55fa-907c-fab5288e1383"
+Cbc = "9961bab8-2fa3-5c5a-9d89-47fab24efd76"
+Clp = "e2554f3b-3117-50c0-817c-e040a3ddf72d"
+DotEnv = "4dc1fcf4-5e3b-5448-94ab-0c38ec0385c1"
+HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
+JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
+JuMP = "4076af6c-e467-56ae-b986-b466b2749572"
+MOSInterface = "62112c2c-ff8a-11e9-0eec-2f7b6b6a4ae2"
+MathOptInterface = "b8f27783-ece8-5eb3-8dc8-9495eed66fee"
+Suppressor = "fd094767-a336-5f1f-9728-57cf17d0bbfb"
+WebSockets = "104b5d7c-a370-577a-8038-80a2059c5097"
