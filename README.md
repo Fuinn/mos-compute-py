@@ -26,6 +26,7 @@ The following environment variables can be specified. They can be provided via a
 
 * MOS_BACKEND_HOST
 * MOS_BACKEND_PORT
+* MOS_BACKEND_TOKEN
 * MOS_RABBIT_PORT
 * MOS_RABBIT_USR
 * MOS_RABBIT_PWD
