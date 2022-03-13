@@ -36,3 +36,5 @@ The following environment variables can be specified. They can be provided via a
 
 * Launch a Python worker by executing ``./workers/worker.py``.
 * Launch a Julia worker by executing ``./workers/worker.jl``.
+
+## Docker Deployment
