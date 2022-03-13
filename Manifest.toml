@@ -215,7 +215,7 @@ uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
 deps = ["DotEnv", "HTTP", "JSON"]
 git-tree-sha1 = "696a6c27f9a2f97abc5ca44ed3d8b5c8eecb65ff"
 repo-rev = "master"
-repo-url = "git@github.com:Fuinn/mos-interface-jl.git"
+repo-url = "https://github.com/Fuinn/mos-interface-jl.git"
 uuid = "62112c2c-ff8a-11e9-0eec-2f7b6b6a4ae2"
 version = "0.1.0"
 
