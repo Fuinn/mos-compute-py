@@ -32,7 +32,19 @@ The following environment variables can be specified. They can be provided via a
 * MOS_RABBIT_PWD
 * MOS_RABBIT_HOST
 
+The backend TOKEN shoud be from an admin user.
+
 ## Local Deployment
 
 * Launch a Python worker by executing ``./workers/worker.py``.
 * Launch a Julia worker by executing ``./workers/worker.jl``.
+
+## Docker Deployment
+
+Launch a dockerized Python worker using
+* ``./scripts/docker_build_py.sh``
+* ``./scripts/docker_run_py.sh``
+
+Launch a dockerized Julia worker using
+* ``./scripts/docker_build_py.sh``
+* ``./scripts/docker_run_py.sh``
