@@ -46,5 +46,5 @@ Launch a dockerized Python worker using
 * ``./scripts/docker_run_py.sh``
 
 Launch a dockerized Julia worker using
-* ``./scripts/docker_build_py.sh``
-* ``./scripts/docker_run_py.sh``
+* ``./scripts/docker_build_jl.sh``
+* ``./scripts/docker_run_jl.sh``
