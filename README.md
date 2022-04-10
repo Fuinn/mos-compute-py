@@ -24,13 +24,14 @@ Pkg.instantiate()
 
 The following environment variables can be specified. They can be provided via a .env file.
 
-* MOS_BACKEND_HOST
-* MOS_BACKEND_PORT
-* MOS_BACKEND_TOKEN
-* MOS_RABBIT_PORT
-* MOS_RABBIT_USR
-* MOS_RABBIT_PWD
-* MOS_RABBIT_HOST
+* MOS_BACKEND_HOST:
+* MOS_BACKEND_PORT:
+* MOS_ADMIN_USR:
+* MOS_ADMIN_PWD:
+* MOS_RABBIT_PORT:
+* MOS_RABBIT_USR:
+* MOS_RABBIT_PWD:
+* MOS_RABBIT_HOST:
 
 The backend TOKEN shoud be from an admin user.
 
