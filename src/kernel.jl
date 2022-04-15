@@ -18,6 +18,11 @@ function model_run(model_id::Int64, model_name::String, caller_id::Int64)
     println("Creating interface")
     interface = MOSInterface.Interface(get_backend_url())
 
+    # Token
+    usr, pwd = get_admin_credentials()
+    token = get_user_token(interface, usr, pwd)
+    set_token!(interface, token)
+
     # Model
     println("Getting model")
     model = get_model(interface, model_id)
