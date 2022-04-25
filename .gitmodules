@@ -1,0 +1,3 @@
+[submodule "submodules/mos-interface-py"]
+	path = submodules/mos-interface-py
+	url = git@github.com:Fuinn/mos-interface-py.git
