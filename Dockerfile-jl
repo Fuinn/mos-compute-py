@@ -1,15 +1,6 @@
-FROM ubuntu:18.04
+FROM julia:1.5.3
 
 LABEL "app.name"="MOS Compute Julia"
-
-# General
-RUN apt-get update && apt-get install -y git
-RUN apt-get install wget
-
-# Julia
-RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.5/julia-1.5.3-linux-x86_64.tar.gz
-RUN tar -xvf julia-1.5.3-linux-x86_64.tar.gz
-RUN ln -s /julia-1.5.3/bin/julia /usr/local/bin/julia
 
 # MOS compute files
 ADD . /mos-compute
