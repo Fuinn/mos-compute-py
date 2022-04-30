@@ -1,4 +1,4 @@
-# mos-compute
+# mos-compute-py
 
 MOS Python compute worker.
 
@@ -28,7 +28,7 @@ The following environment variables can be specified. They can be provided via a
 
 ## Local Deployment
 
-* Launch a Python worker by executing ``./workers/worker.py``.
+Launch a Python worker by executing ``./workers/worker.py``.
 
 ## Docker Deployment
 
