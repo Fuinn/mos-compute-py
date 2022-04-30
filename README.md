@@ -1,24 +1,17 @@
 # mos-compute
 
-MOS compute workers.
+MOS Python compute worker.
 
 ## Pre-requisites
 
 ### Services
 
 * rabbitmq
+* mos-backend
 
-### Python dependencies
+### Dependencies
 
 ```sudo pip install -r requirements.txt```
-
-### Julia Dependencies
-
-```
-import Pkg
-Pkg.activate(".")
-Pkg.instantiate()
-```
 
 ### Environment variables
 
@@ -33,19 +26,14 @@ The following environment variables can be specified. They can be provided via a
 * MOS_RABBIT_PWD:
 * MOS_RABBIT_HOST:
 
-The backend TOKEN shoud be from an admin user.
-
 ## Local Deployment
 
 * Launch a Python worker by executing ``./workers/worker.py``.
-* Launch a Julia worker by executing ``./workers/worker.jl``.
 
 ## Docker Deployment
 
-Launch a dockerized Python worker using
-* ``./scripts/docker_build_py.sh``
-* ``./scripts/docker_run_py.sh``
+The following scripts are available for building the image, running the container, and for pushing the image to Docker Hub:
 
-Launch a dockerized Julia worker using
-* ``./scripts/docker_build_jl.sh``
-* ``./scripts/docker_run_jl.sh``
+* ``./scripts/docker_build.sh``
+* ``./scripts/docker_run.sh``
+* ``./scripts/docker_push.sh``
