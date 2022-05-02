@@ -3,6 +3,7 @@ import os
 import sys
 import pika
 import json
+import time
 
 sys.path.insert(0, '.')
 
@@ -21,11 +22,23 @@ def main():
       os.getenv('MOS_RABBIT_PWD', 'guest'),
     )
 
-    connection = pika.BlockingConnection(pika.ConnectionParameters(
-        host=os.getenv('MOS_RABBIT_HOST', 'localhost'),
-        port=os.getenv('MOS_RABBIT_PORT', 5672),
-        credentials=credentials
-    )) 
+    conn_retries = 0
+    conn_retries_max = int(os.getenv('MOS_COMPUTE_CONN_RETRIES_MAX', 60))
+    conn_retries_int = int(os.getenv('MOS_COMPUTE_CONN_RETRIES_INT', 5))
+    while conn_retries < conn_retries_max:
+        try:
+            connection = pika.BlockingConnection(pika.ConnectionParameters(
+                host=os.getenv('MOS_RABBIT_HOST', 'localhost'),
+                port=os.getenv('MOS_RABBIT_PORT', 5672),
+                credentials=credentials
+            )) 
+            break
+        except pika.exceptions.AMQPConnectionError:
+            print('Waiting for message queue to be available ...')
+            time.sleep(conn_retries_int)
+            conn_retries += 1
+    else:
+        raise Exception("Unable to connect to rabbitmq")
 
     channel = connection.channel()
     channel.queue_declare(queue='mos-python')
@@ -38,6 +51,7 @@ def main():
                         body['caller_id'])
         print("Task done")  
 
+    print('Consuming messages ...')
     channel.basic_consume(queue='mos-python', on_message_callback=callback, auto_ack=True)
     channel.start_consuming()
 
