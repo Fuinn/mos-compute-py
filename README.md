@@ -25,6 +25,8 @@ The following environment variables can be specified. They can be provided via a
 * MOS_RABBIT_USR:
 * MOS_RABBIT_PWD:
 * MOS_RABBIT_HOST:
+* MOS_COMPUTE_CONN_RETRIES_INT:
+* MOS_COMPUTE_CONN_RETRIES_MAX:
 
 ## Local Deployment
 
