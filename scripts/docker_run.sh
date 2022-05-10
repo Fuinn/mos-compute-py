@@ -3,5 +3,5 @@ sudo docker run -it \
                 --rm \
                 --network=host \
                 --env-file=.env \
-                --name=mos-compute-py \
-                tomastinoco/mos-compute-py
+                --name=mos-demo-compute-py \
+                tomastinoco/mos-demo-compute-py

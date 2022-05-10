@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo docker push tomastinoco/mos-compute-py
+sudo docker push tomastinoco/mos-demo-compute-py
