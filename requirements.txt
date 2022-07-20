@@ -1,6 +1,6 @@
 cvxpy==1.1.18
 matplotlib==3.3.0
-mos-interface==0.1.0
+mos-interface==0.1.1
 pika==1.2.0
 pyomo==5.7.3
 python-dotenv==0.15.0
