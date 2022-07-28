@@ -38,12 +38,21 @@ class PyomoKernel(ComputeKernel):
                 instance = scope['instance']
             except:
                 print("instance required for this version of kernel")
+                print('scope is: ',scope)
+
+            print(scope)
+            print('scope keys')
+            print(scope.keys())
+            # for abstract model type, necessary to harness instance. question is can it be accessed automatically, or does it need the name instance in code as is the case here
                 
             # Extract helper objects
             print('Extracting helper objects')
             for o in model.__get_helper_objects__():
 
                 helper = eval('instance.' + o['name'])
+                print(helper)
+                print(o['name'])
+                print(scope[o['name']])
 
                 try:
                     if helper.is_parameter_type():
