@@ -34,8 +34,11 @@ class PyomoKernel(ComputeKernel):
             scope = {}
             exec(recipe.getvalue(), scope, scope)
 
-            instance = scope['instance']
-            
+            try:
+                instance = scope['instance']
+            except:
+                print("instance required for this version of kernel")
+                
             # Extract helper objects
             print('Extracting helper objects')
             for o in model.__get_helper_objects__():
