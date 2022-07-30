@@ -37,22 +37,13 @@ class PyomoKernel(ComputeKernel):
             try:
                 instance = scope['instance']
             except:
-                print("instance required for this version of kernel")
-                print('scope is: ',scope)
-
-            print(scope)
-            print('scope keys')
-            print(scope.keys())
-            # for abstract model type, necessary to harness instance. question is can it be accessed automatically, or does it need the name instance in code as is the case here
+                instance = scope['model']
                 
             # Extract helper objects
             print('Extracting helper objects')
             for o in model.__get_helper_objects__():
 
                 helper = eval('instance.' + o['name'])
-                print(helper)
-                print(o['name'])
-                print(scope[o['name']])
 
                 try:
                     if helper.is_parameter_type():
@@ -107,9 +98,10 @@ class PyomoKernel(ComputeKernel):
                         
                     model.__set_var_type_and_shape__(v, vtype, vshape)
 
-                    v_lb = variable._bounds_init_value[0] if variable._bounds_init_value != None else -1e9
-                    v_ub = variable._bounds_init_value[1] if variable._bounds_init_value != None else 1e9
-                
+                    if variable._bounds_init_value != None:
+                        v_lb = variable._bounds_init_value[0] if variable._bounds_init_value[0] != None else -1e9
+                        v_ub = variable._bounds_init_value[1] if variable._bounds_init_value[1] != None else 1e9
+
                     for key in variable_dict:
                         vdomain = eval('instance.'+v['name']+'['+str(key)+'].domain')
                         vkind = 'unknown'
@@ -123,14 +115,13 @@ class PyomoKernel(ComputeKernel):
                         var_states.append(dict(
                             variable=v['url'],
                             owner=model.get_owner_id(),
-                            index=key,
+                            index=str(key),
                             label=v_labels[key] if key in v_labels else '',
                             value=variable_dict[key],
                             kind = vkind,
                             upper_bound=v_ub,
                             lower_bound=v_lb
                         ))
-                        
             model.__add_variable_states__(var_states)
 
 
