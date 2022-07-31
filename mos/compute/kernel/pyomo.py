@@ -37,8 +37,11 @@ class PyomoKernel(ComputeKernel):
             try:
                 instance = scope['instance']
             except:
-                instance = scope['model']
-                
+                try:
+                    instance = scope['model']
+                except:
+                    print("****Under MOS Pyomo kernel currently, an instance of AbstractModel must be named 'instance', while a a Concrete Model must be named 'model'****")
+                    
             # Extract helper objects
             print('Extracting helper objects')
             for o in model.__get_helper_objects__():
