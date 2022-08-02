@@ -28,6 +28,19 @@ The following environment variables can be specified. They can be provided via a
 * MOS_COMPUTE_CONN_RETRIES_INT:
 * MOS_COMPUTE_CONN_RETRIES_MAX:
 
+### Configuration for MOS Demo
+
+To enable a compute worker to work with the [MOS demo](https://github.com/Fuinn/mos-demo) on the same machine, specify the following values:
+
+* MOS_BACKEND_HOST=localhost
+* MOS_BACKEND_PORT=8000
+* MOS_ADMIN_USR=mos
+* MOS_ADMIN_PWD=demo
+* MOS_RABBIT_PORT=5672  
+* MOS_RABBIT_USR=guest
+* MOS_RABBIT_PWD=guest
+* MOS_RABBIT_HOST=localhost
+
 ## Local Deployment
 
 Launch a Python worker by executing ``./workers/worker.py``.
