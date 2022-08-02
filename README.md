@@ -28,9 +28,9 @@ The following environment variables can be specified. They can be provided via a
 * MOS_COMPUTE_CONN_RETRIES_INT:
 * MOS_COMPUTE_CONN_RETRIES_MAX:
 
-### MOS Demo Configuration
+### Configuration for MOS Demo
 
-To enable a compute worker to server model run requests from the [MOS demo](https://github.com/Fuinn/mos-demo), specify the following values:
+To enable a compute worker to work with the [MOS demo](https://github.com/Fuinn/mos-demo) on the same machine, specify the following values:
 
 * MOS_BACKEND_HOST=localhost
 * MOS_BACKEND_PORT=8000
