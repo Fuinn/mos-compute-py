@@ -21,10 +21,14 @@ def model_run(model_id, model_name, caller_id):
             backend_host, 
             backend_port))
 
-        token = interface.get_user_token(
-            os.getenv('MOS_ADMIN_USR'),
-            os.getenv('MOS_ADMIN_PWD'),
-        )
+        if os.getenv('MOS_ADMIN_TKN') == None:
+            token = interface.get_user_token(
+                os.getenv('MOS_ADMIN_USR'),
+                os.getenv('MOS_ADMIN_PWD'),
+            )
+        else:
+            token = os.getenv('MOS_ADMIN_TKN')
+            
         interface.set_token(token)
 
         model = interface.get_model_with_id(model_id)
