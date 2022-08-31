@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(name='mos-compute-py',
       zip_safe=False,
-      version='0.1.0',
+      version='0.2.0',
       author='Fuinn',
       url='https://github.com/Fuinn/mos-compute-py',
       description='MOS Python compute worker',
