@@ -62,20 +62,21 @@ class CvxpyKernel(ComputeKernel):
                 v_cvxpy = scope[v['name']]
                 v_labels = scope[v['labels']] if v['labels'] else {}
 
-                if v_cvxpy.is_nonneg():
-                    lb = 0
-                else:
-                    lb = -1e9
-                ub = 1e9
-                # Kinds (needs to be improved to check each component)
-                if len(v_cvxpy.boolean_idx) > 0:
-                    kind_v = 'binary'
-                    lb = 0
-                    ub = 1
-                elif len(v_cvxpy.integer_idx) > 0:
-                    kind_v = 'integer'
-                else:
-                    kind_v = 'continuous'
+                if not isinstance(v_cvxpy,list):
+                    if v_cvxpy.is_nonneg():
+                        lb = 0
+                    else:
+                        lb = -1e9
+                    ub = 1e9
+                    # Kinds (needs to be improved to check each component)
+                    if len(v_cvxpy.boolean_idx) > 0:
+                        kind_v = 'binary'
+                        lb = 0
+                        ub = 1
+                    elif len(v_cvxpy.integer_idx) > 0:
+                        kind_v = 'integer'
+                    else:
+                        kind_v = 'continuous'
 
                 # Variable scalar
                 #################
@@ -145,6 +146,72 @@ class CvxpyKernel(ComputeKernel):
                                 upper_bound=ub,
                                 lower_bound=lb))
 
+
+                # List
+                ########
+                elif isinstance(v_cvxpy,list) and all([isinstance(i, Variable) for i in v_cvxpy]):
+                    # Type and shape
+                    shape = []
+                    for item in v_cvxpy:
+                        if item.is_scalar():
+                            shape.append(1)
+                        else:
+                            shape.append(item.size)
+                        
+                    # Array is closest allowed type to list for now
+                    model.__set_var_type_and_shape__(v, 
+                                                     'array',
+                                                     shape)
+                    ub=1e9
+                    lb=-1e9
+                    kind_v='continuous'
+                    for i,item in enumerate(v_cvxpy):
+                        v_labels_local = v_labels[i] if i in v_labels else {}
+                        if item.is_nonneg():
+                            lb = 0
+                        if len(item.boolean_idx) > 0:
+                            kind_v = 'binary'
+                            lb = 0
+                            ub = 1
+                        elif len(item.integer_idx) > 0:
+                            kind_v = 'integer'
+                        else:
+                            kind_v = 'continuous'
+                            
+                        if item.is_scalar():
+                            var_states.append(dict(
+                                variable=v['url'],
+                                owner=model.get_owner_id(),
+                                index=[i],
+                                label=v_labels_local if not isinstance(v_labels,dict) else '',
+                                value=item.value,
+                                kind=kind_v,
+                                upper_bound=ub,
+                                lower_bound=lb))                            
+                        elif item.is_vector():
+                            for j in range(item.size):
+                                var_states.append(dict(
+                                    variable=v['url'],
+                                    owner=model.get_owner_id(),
+                                    index=[i,j],
+                                    label=v_labels_local[j] if j in v_labels_local else '',
+                                    value=item.value[j],
+                                    kind=kind_v,
+                                    upper_bound=ub,
+                                    lower_bound=lb))                                
+                        elif item.is_matrix():
+                            for j in range(item.size[0]):
+                                for k in range(item.size[1]):
+                                    var_states.append(dict(
+                                        variable=v['url'],
+                                        owner=model.get_owner_id(),
+                                        index=[i,j,k],
+                                        label=v_labels_local[(j,k)] if (j,k) in v_labels_local else '',
+                                        value=item.value[j][k],
+                                        kind=kind_v,
+                                        upper_bound=ub,
+                                        lower_bound=lb))                                                        
+
                 # Unknown
                 #########
                 else:
@@ -200,7 +267,46 @@ class CvxpyKernel(ComputeKernel):
                                 index=[i,j],
                                 label=f_labels[(i,j)] if (i,j) in f_labels else '',
                                 value=float(f_cvxpy.value[i][j])))
- 
+
+                # Expression list
+                ###################
+                elif isinstance(f_cvxpy,list) and all([isinstance(i, Expression) for i in f_cvxpy]):
+                    shape = []
+                    for item in f_cvxpy:
+                        if item.is_scalar():
+                            shape.append(1)
+                        else:
+                            shape.append(item.size)
+                    model.__set_func_type_and_shape__(f,'array',shape)
+
+                    for i,item in enumerate(f_cvxpy):
+                        f_labels_local = f_labels[i] if i in f_labels else {}
+
+                        if item.is_scalar():
+                            func_states.append(dict(
+                                function=f['url'],
+                                owner=model.get_owner_id(),
+                                index=[i],
+                                label=f_labels_local if not isinstance(f_labels,dict) else '',
+                                value=item.value))
+                        elif item.is_vector():
+                            for j in range(item.size):
+                                func_states.append(dict(
+                                    function=f['url'],
+                                    owner=model.get_owner_id(),
+                                    index=[i,j],
+                                    label=f_labels_local[j] if j in f_labels_local else '',
+                                    value=item.value[j]))
+                        elif item.is_matrix():
+                            for j in range(item.shape[0]):
+                                for k in range(item.shape[1]):
+                                    func_states.append(dict(
+                                        function=f['url'],
+                                        owner=model.get_owner_id(),
+                                        index=[i,j,k],
+                                        label=f_labels_local[(j,k)] if (j,k) in f_labels_local else '',
+                                        value=item.value[j][k]))
+                            
                 # Unknown
                 #########
                 else:
